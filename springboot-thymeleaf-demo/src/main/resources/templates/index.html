@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script th:replace="common/head::static"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- head -->
+    <div class="layui-header">
+        <div class="layui-logo">
+            <!--<img class="layui-nav-img" src="" />-->
+            <span>SouRecord</span>
+        </div>
+        <ul class="layui-nav layui-layout-left" lay-filter="head"></ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="config">
+            <li class="layui-nav-item">
+                <a><!--<img src=""/>--><span>Administrator</span></a>
+                <dl class="layui-nav-child">
+                    <dd class=""><a class="" href="">个人信息</a></dd>
+                    <dd class=""><a class="" href="">系统配置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">退出</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- left -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="indexUlMenu">
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">权限管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class="">
+                            <a class="layui-menu" href="javascript:;" data-url="/sys/sysuser/user" data-id="sys_user">用户管理</a>
+                        </dd>
+                        <dd>
+                            <a class="layui-menu" href="javascript:;" data-url="/sys/sysrole/role" data-id="sys_role">角色管理</a>
+                        </dd>
+                        <dd>
+                            <a class="layui-menu" href="javascript:;" data-url="/sys/sysdept/dept" data-id="sys_dept">部门管理</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">娱乐管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class="">
+                            <a class="layui-menu" data-url="" data-id="/amusement/ktv" href="javascript:;">KTV</a>
+                        </dd>
+                        <dd class="">
+                            <a class="layui-menu" data-url="" data-id="/amusement/card" href="javascript:;">纸牌</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- right -->
+    <div class="layui-body">
+        <div class="layui-tab" lay-filter="indexTab" lay-allowclose="true">
+            <!-- title -->
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="sys_index">首页</li>
+            </ul>
+            <!-- content -->
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md12">
+                            <div class="layui-card-header">
+                                <span>Welcome</span>
+                            </div>
+                            <div class="layui-card-body">
+                                <p>This is index</p>
+                                <p>This is index page....................</p>
+                                <p>This is index page........................................</p>
+                                <p>This is index page........................................</p>
+                                <p>This is index page....................</p>
+                                <p>This is index</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom -->
+        <div class="layui-footer">(C) Copyright 2020 lichao. All Right Reserved</div>
+    </div>
+</div>
+<script th:src="@{/common/layui/layui.all.js}"></script>
+<script>
+    layui.use('element', function () {
+        let element = layui.element;
+
+        $('body').on('click', ".layui-menu", function (e) {
+            var text = $(this).text();
+            var id = $(this).data('id');
+            var url = $(this).data('url');
+            /*<![CDATA[*/
+            if ($('.layui-tab-title').find('li[lay-id="' + id + '"]').length <= 0) {
+                var height = document.documentElement.clientHeight - 160 + "px";
+                element.tabAdd('indexTab', {
+                    title : text,
+                    content : "<iframe onload='$(this)[0].height=document.documentElement.clientHeight-160' width='100%' height='" + height + "' frameborder='0' scrolling='auto' src='" + url + "'></iframe>",
+                    id : id
+                });
+            }
+            /*]]>*/
+            element.tabChange('indexTab', id);
+        });
+    })
+</script>
+</body>
+</html>
